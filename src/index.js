@@ -1,14 +1,16 @@
 const path = require('path');
 const express = require('express');
+const exphbs = require('express-handlebars');
 const app = express();
-const hbs = require('express-handlebars');
-const port = 3000;
+const port = 8080;
+app.use(express.static(path.join(__dirname, 'public')));
+console.log(path.join(__dirname, 'public'))
 
-//template engine
-app.engine('hbs', hbs.engine({
-      extname: '.hbs'
+// Thiết lập engine template
+app.engine('.hbs', exphbs({
+  extname: '.hbs'
 }));
-app.set('views engine', 'hbs');
+app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
 app.get('/', (req, res) => {
@@ -18,6 +20,6 @@ app.get('/', (req, res) => {
 app.get('/news', (req, res) => {
   res.render('news');
 })
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
 
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
 
